@@ -9,21 +9,22 @@ namespace PasswordValidatorKata
 {
     public class PasswordValidator : IPasswordValidator
     {
-        private readonly List<Func<string, bool>> rules = new List<Func<string, bool>>();
-        private readonly Func<string, bool> isUppercase = input => new Regex("[A-Z]").IsMatch(input);
-        private readonly Func<string, bool> isLowercase = input => new Regex("[a-z]").IsMatch(input);
+        private readonly List<IValidationRule> rules = new List<IValidationRule>()
+        {
+            new RegexValidationRule("[A-Z]", "Password should have at least one uppercase character"),
+            new RegexValidationRule("[a-z]", "Password should have at least one lowercase character"),
+        };
 
         public ValidationResult Validate(ValidationData validationData)
         {
             var messages = new List<string>();
 
-            if (!isUppercase(validationData.Password))
+            foreach (var rule in rules)
             {
-                messages.Add("Password should have at least one uppercase character");
-            }
-            if (!isLowercase(validationData.Password))
-            {
-                messages.Add("Password should have at least one lowercase character");
+                if (!rule.Validate(validationData.Password))
+                {
+                    messages.Add(rule.Message);
+                }
             }
 
             return new ValidationResult(!messages.Any(), messages);
