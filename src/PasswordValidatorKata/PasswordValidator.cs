@@ -10,6 +10,7 @@ namespace PasswordValidatorKata
     public class PasswordValidator
     {
         private readonly Regex hasUppercaseRegex = new Regex("[A-Z]");
+        private readonly Regex hasLowercaseRegex = new Regex("[a-z]");
 
         public ValidationResult Validate(ValidationData validationData)
         {
@@ -19,6 +20,10 @@ namespace PasswordValidatorKata
             {
                 messages.Add("Password should have at least one uppercase character");
             }
+            if (!GetHasLowercase(validationData))
+            {
+                messages.Add("Password should have at least one lowercase character");
+            }
 
             return new ValidationResult(!messages.Any(), messages);
         }
@@ -26,6 +31,11 @@ namespace PasswordValidatorKata
         private bool GetHasUppercase(ValidationData validationData)
         {
             return hasUppercaseRegex.Match(validationData.Password).Success;
+        }
+
+        private bool GetHasLowercase(ValidationData validationData)
+        {
+            return hasLowercaseRegex.Match(validationData.Password).Success;
         }
     }
 }
