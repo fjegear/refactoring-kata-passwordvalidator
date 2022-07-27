@@ -14,14 +14,18 @@ namespace PasswordValidatorKata
         public ValidationResult Validate(ValidationData validationData)
         {
             var messages = new List<string>();
-            var hasUppercase = hasUppercaseRegex.Match(validationData.Password);
 
-            if (!hasUppercase.Success)
+            if (!GetHasUppercase(validationData))
             {
                 messages.Add("Password should have at least one uppercase character");
             }
 
             return new ValidationResult(!messages.Any(), messages);
+        }
+
+        private bool GetHasUppercase(ValidationData validationData)
+        {
+            return hasUppercaseRegex.Match(validationData.Password).Success;
         }
     }
 }
