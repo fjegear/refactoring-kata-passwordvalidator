@@ -19,13 +19,9 @@ namespace PasswordValidatorKata
         {
             var messages = new List<string>();
 
-            foreach (var rule in rules)
-            {
-                if (!rule.Validate(validationData.Password))
-                {
-                    messages.Add(rule.Message);
-                }
-            }
+            messages = rules
+                .Where(rule => !rule.Validate(validationData.Password))
+                .Select(rule => rule.Message).ToList();
 
             return new ValidationResult(!messages.Any(), messages);
         }
