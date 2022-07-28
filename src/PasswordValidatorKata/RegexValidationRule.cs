@@ -10,17 +10,20 @@ namespace PasswordValidatorKata
     public class RegexValidationRule : IValidationRule
     {
         public string Regex { get; init; }
+        public bool ValidIfMatch { get; set; }
         public string Message { get; init; }
 
-        public RegexValidationRule(string regex, string message)
+        public RegexValidationRule(string regex, bool validIfMatch, string message)
         {
             Regex = regex;
+            ValidIfMatch = validIfMatch;
             Message = message;
         }
 
         public bool Validate(string input)
         {
-            return new Regex(Regex).IsMatch(input);
+            var match = new Regex(Regex).IsMatch(input);
+            return ValidIfMatch ? match : !match;
         }
     }
 }
