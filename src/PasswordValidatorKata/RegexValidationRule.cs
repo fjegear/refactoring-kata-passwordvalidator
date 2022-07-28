@@ -10,7 +10,7 @@ namespace PasswordValidatorKata
     public class RegexValidationRule : IValidationRule
     {
         public string Regex { get; init; }
-        public bool ValidIfMatch { get; set; }
+        public bool ValidIfMatch { get; init; }
         public string Message { get; init; }
 
         public RegexValidationRule(string regex, bool validIfMatch, string message)
