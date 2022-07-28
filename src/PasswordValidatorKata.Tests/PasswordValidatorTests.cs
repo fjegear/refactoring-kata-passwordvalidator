@@ -9,13 +9,6 @@ namespace PasswordValidatorKata.Tests
 {
     public class PasswordValidatorTests
     {
-        private readonly PasswordValidator _passwordValidator;
-
-        public PasswordValidatorTests()
-        {
-            _passwordValidator = new PasswordValidator();
-        }
-
         [Theory]
         [InlineData("userp@ssw0rd", false, "Password should have at least one uppercase character")]
         [InlineData("USERP@SSW0RD", false, "Password should have at least one lowercase character")]
@@ -27,11 +20,12 @@ namespace PasswordValidatorKata.Tests
         public void Should_validate_When(string password, bool valid, string message)
         {
             //Arrange
-            var validatioData = new ValidationData(password);
+            var passwordValidator = new PasswordValidator();
+            var validationData = new ValidationData(password);
             var messages = message is not null ? new List<string> { message } : Enumerable.Empty<string>();
 
             //Act
-            var result = _passwordValidator.Validate(validatioData);
+            var result = passwordValidator.Validate(validationData);
 
             //Assert
             result.IsValid.Should().Be(valid);
