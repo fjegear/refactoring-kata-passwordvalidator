@@ -16,13 +16,18 @@ namespace PasswordValidatorKata.Tests
         [InlineData("UserPassw0rd", false, "Password should have at least one special character")]
         [InlineData("UserP@sw0rd", false, "Password should be at least 12 characters long")]
         [InlineData("User   P@ss w0rd", false, "Password should not have any whitespaces")]
+        [InlineData("userpasword", false,
+            "Password should have at least one uppercase character;" +
+            "Password should have at least one digit;" +
+            "Password should have at least one special character;" +
+            "Password should be at least 12 characters long")]
         [InlineData("UserP@ssw0rd", true, null)]
-        public void Should_validate_When(string password, bool valid, string message)
+        public void Should_validate_When(string password, bool valid, string messageString)
         {
             //Arrange
             var passwordValidator = new PasswordValidator();
             var validationData = new ValidationData(password);
-            var messages = message is not null ? new List<string> { message } : Enumerable.Empty<string>();
+            var messages = messageString is not null ? messageString.Split(';') : Enumerable.Empty<string>();
 
             //Act
             var result = passwordValidator.Validate(validationData);

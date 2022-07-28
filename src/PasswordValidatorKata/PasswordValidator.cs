@@ -14,7 +14,8 @@ namespace PasswordValidatorKata
             new RegexValidationRule("[A-Z]", true, "Password should have at least one uppercase character"),
             new RegexValidationRule("[a-z]", true, "Password should have at least one lowercase character"),
             new RegexValidationRule("[0-9]", true, "Password should have at least one digit"),
-            new RegexValidationRule("[!”#\\$%&'\\(\\)\\*\\+,-\\.\\:;<=>\\?@\\[/\\]^_`\\{\\|\\}~]", true, "Password should have at least one special character"),
+            new RegexValidationRule("[!”#\\$%&'\\(\\)\\*\\+,-\\.\\:;<=>\\?@\\[/\\]^_`\\{\\|\\}~]", true, 
+                "Password should have at least one special character"),
             new RegexValidationRule(".{12,}", true, "Password should be at least 12 characters long"),
             new RegexValidationRule("(\\s)", false, "Password should not have any whitespaces"),
         };
